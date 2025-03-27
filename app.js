@@ -244,7 +244,7 @@ let m=date.getMonth();
         }
         else{
             if (desci=="clear sky") {
-                    document.querySelector(".pic").innerHTML=`<img src="/sunny.png" alt="Weather-icon" >`;
+                    document.querySelector(".pic").innerHTML=`<img src="/papa.jpg" alt="Weather-icon" >`;
                 
             } else if(desci=="few clouds"){
                     document.querySelector(".pic").innerHTML=`<img src="/few-clouds.png" alt="Weather-icon" >`;
