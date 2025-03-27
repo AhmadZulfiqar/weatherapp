@@ -204,14 +204,14 @@ let m=date.getMonth();
         if(hrs>18)
         {
             if (desci=="clear sky") {
-                    document.querySelector(".pic").innerHTML=`<img src="/papa.jpg" alt="Weather-icon" >`;   
+                    document.querySelector(".pic").innerHTML=`<img src="https://drive.google.com/file/d/19sito2CoJgdKpbQO10kyOzqNssgCDnA-/view?usp=drive_link" alt="Weather-icon" >`;   
                 
             } else if(desci=="few clouds"){
                 
-                    document.querySelector(".pic").innerHTML=`<img src="/few-clouds-moon.png" alt="Weather-icon" >`;
+                    document.querySelector(".pic").innerHTML=`<img src="https://drive.google.com/file/d/13S2k4o08lwPEO9Y0DhlGciMR0Hs9Zv8T/view?usp=drive_link" alt="Weather-icon" >`;
                 
             } else if(desci=="scattered clouds"){
-                document.querySelector(".pic").innerHTML=`<img src="/scarted-clouds.png" alt="Weather-icon" >`;
+                document.querySelector(".pic").innerHTML=`<img src="https://drive.google.com/file/d/1EL0aeWFFNmqn_848STixwwS4djw1OeZI/view?usp=drive_link" alt="Weather-icon" >`;
             } else if(desci=="broken clouds"){
     
                     document.querySelector(".pic").innerHTML=`<img src="/broken-clouds-moon.png" alt="Weather-icon" >`;
