@@ -131,20 +131,20 @@ async function getweekweather(latt,lonn) {
         // each entry contains weather data and a dt_txt field that shows the date and time of the forecast.
         
         let png1 = weekdata.list[2].weather[0].description;
-        let png2 = weekdata.list[9].weather[0].description;
-        let png3 = weekdata.list[17].weather[0].description;
-        let png4 = weekdata.list[25].weather[0].description;
-        let png5 = weekdata.list[33].weather[0].description;
+        let png2 = weekdata.list[11].weather[0].description;
+        let png3 = weekdata.list[20].weather[0].description;
+        let png4 = weekdata.list[31].weather[0].description;
+        let png5 = weekdata.list[39].weather[0].description;
         getpngweather1(png1, e1);
         getpngweather1(png2, e2);
         getpngweather1(png3, e3);
         getpngweather1(png4, e4);
         getpngweather1(png5, e5);
         let wday1=weekdata.list[2].dt_txt;
-        let wday2=weekdata.list[9].dt_txt;
-        let wday3=weekdata.list[17].dt_txt;
-        let wday4=weekdata.list[25].dt_txt;
-        let wday5=weekdata.list[33].dt_txt;
+        let wday2=weekdata.list[11].dt_txt;
+        let wday3=weekdata.list[20].dt_txt;
+        let wday4=weekdata.list[31].dt_txt;
+        let wday5=weekdata.list[39].dt_txt;
         splitdate(wday1,wm1,wd1);
         splitdate(wday2,wm2,wd2);
         splitdate(wday3,wm3,wd3);
@@ -152,16 +152,16 @@ async function getweekweather(latt,lonn) {
         splitdate(wday5,wm5,wd5);
         
         let wtempmax1=Math.floor(weekdata.list[2].main.temp_max);
-        let wtempmax2=Math.floor(weekdata.list[9].main.temp_max);
-        let wtempmax3=Math.floor(weekdata.list[17].main.temp_max);
-        let wtempmax4=Math.floor(weekdata.list[25].main.temp_max);
-        let wtempmax5=Math.floor(weekdata.list[33].main.temp_max);
+        let wtempmax2=Math.floor(weekdata.list[11].main.temp_max);
+        let wtempmax3=Math.floor(weekdata.list[20].main.temp_max);
+        let wtempmax4=Math.floor(weekdata.list[31].main.temp_max);
+        let wtempmax5=Math.floor(weekdata.list[39].main.temp_max);
         
         let wtempmin1=Math.floor(weekdata.list[2].main.temp_min);
-        let wtempmin2=Math.floor(weekdata.list[9].main.temp_min);
-        let wtempmin3=Math.floor(weekdata.list[17].main.temp_min);
-        let wtempmin4=Math.floor(weekdata.list[25].main.temp_min);
-        let wtempmin5=Math.floor(weekdata.list[33].main.temp_min);
+        let wtempmin2=Math.floor(weekdata.list[11].main.temp_min);
+        let wtempmin3=Math.floor(weekdata.list[20].main.temp_min);
+        let wtempmin4=Math.floor(weekdata.list[31].main.temp_min);
+        let wtempmin5=Math.floor(weekdata.list[39].main.temp_min);
         gettemp(wtempmax1,wtempmin1,stmax1,stmin1);
         gettemp(wtempmax2,wtempmin2,stmax2,stmin2);
         gettemp(wtempmax3,wtempmin3,stmax3,stmin3);
