@@ -204,7 +204,7 @@ let m=date.getMonth();
         if(hrs>18)
         {
             if (desci=="clear sky") {
-                    document.querySelector(".pic").innerHTML=`<img src="/clear-moon.png" alt="Weather-icon" >`;   
+                    document.querySelector(".pic").innerHTML=`<img src="/papa.jpg" alt="Weather-icon" >`;   
                 
             } else if(desci=="few clouds"){
                 
