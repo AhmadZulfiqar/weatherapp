@@ -201,6 +201,7 @@ let Day=date.getDay();
 let yr=date.getFullYear();
 let dat=date.getDate();
 let m=date.getMonth();
+d.innerHTML=dat;
         if(hrs>18)
         {
             if (desci=="clear sky") {
@@ -283,19 +284,19 @@ let m=date.getMonth();
         
         if(Day=="0")
         {
-            cday.innerHTML="Monday";    
-        }else if(Day=="1"){
-            cday.innerHTML="Tuesday";    
-        }else if(Day=="2"){
-            cday.innerHTML="Wednesday";    
-        }else if(Day=="3"){
-            cday.innerHTML="Thursday";    
-        }else if(Day=="4"){
-            cday.innerHTML="Friday";    
-        }else if(Day=="5"){
-            cday.innerHTML="Saturday";    
-        }else{
             cday.innerHTML="Sunady";    
+        }else if(Day=="1"){
+            cday.innerHTML="Monday";    
+        }else if(Day=="2"){
+            cday.innerHTML="Tuesday";    
+        }else if(Day=="3"){
+            cday.innerHTML="Wednesday";    
+        }else if(Day=="4"){
+            cday.innerHTML="Thursday";    
+        }else if(Day=="5"){
+            cday.innerHTML="Friday";    
+        }else{
+            cday.innerHTML="Saturday";    
         }
         if (m=="0") {
             month.innerHTML="January";
@@ -328,9 +329,9 @@ let m=date.getMonth();
         }
         if(hrs>12)
         {
-            se.innerHTML="PM";
-        }else{
             se.innerHTML="AM";
+        }else{
+            se.innerHTML="PM";
         }
               
         
