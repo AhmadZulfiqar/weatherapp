@@ -204,7 +204,7 @@ let m=date.getMonth();
         if(hrs>18)
         {
             if (desci=="clear sky") {
-                    document.querySelector(".pic").innerHTML=`<img src="https://drive.google.com/file/d/19sito2CoJgdKpbQO10kyOzqNssgCDnA-/view?usp=drive_link" alt="Weather-icon" >`;   
+                    document.querySelector(".pic").innerHTML=`<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzS3eJDy8zC_hYUTDejQbJ0CEURpXmZrMaTA&s" alt="Weather-icon" >`;   
                 
             } else if(desci=="few clouds"){
                 
