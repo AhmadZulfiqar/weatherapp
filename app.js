@@ -204,42 +204,42 @@ let m=date.getMonth();
         if(hrs>18)
         {
             if (desci=="clear sky") {
-                    document.querySelector(".pic").innerHTML=`<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzS3eJDy8zC_hYUTDejQbJ0CEURpXmZrMaTA&s" alt="Weather-icon" >`;   
+                    document.querySelector(".pic").innerHTML=`<img src="./sunny.png" alt="Weather-icon" >`;   
                 
             } else if(desci=="few clouds"){
                 
-                    document.querySelector(".pic").innerHTML=`<img src="https://drive.google.com/file/d/13S2k4o08lwPEO9Y0DhlGciMR0Hs9Zv8T/view?usp=drive_link" alt="Weather-icon" >`;
+                    document.querySelector(".pic").innerHTML=`<img src="./few-clouds-moon.png" alt="Weather-icon" >`;
                 
             } else if(desci=="scattered clouds"){
-                document.querySelector(".pic").innerHTML=`<img src="https://drive.google.com/file/d/1EL0aeWFFNmqn_848STixwwS4djw1OeZI/view?usp=drive_link" alt="Weather-icon" >`;
+                document.querySelector(".pic").innerHTML=`<img src="./scarted-clouds.png" alt="Weather-icon" >`;
             } else if(desci=="broken clouds"){
     
-                    document.querySelector(".pic").innerHTML=`<img src="/broken-clouds-moon.png" alt="Weather-icon" >`;
+                    document.querySelector(".pic").innerHTML=`<img src="./broken-clouds-moon.png" alt="Weather-icon" >`;
                 
             }  else if(desci=="	shower rain"){
-                document.querySelector(".pic").innerHTML=`<img src="/shower-rain.png" alt="Weather-icon" >`;
+                document.querySelector(".pic").innerHTML=`<img src="./shower-rain.png" alt="Weather-icon" >`;
             }  else if(desci=="rain"){
              
-                    document.querySelector(".pic").innerHTML=`<img src="/rain-moon.png" alt="Weather-icon" >`;
+                    document.querySelector(".pic").innerHTML=`<img src="./rain-moon.png" alt="Weather-icon" >`;
                 
             }  else if(desci=="	thunderstorm"){
-                document.querySelector(".pic").innerHTML=`<img src="/thunderstrom.png" alt="Weather-icon" >`;
+                document.querySelector(".pic").innerHTML=`<img src="./thunderstrom.png" alt="Weather-icon" >`;
             }  else if(desci=="snow"){
-                document.querySelector(".pic").innerHTML=`<img src="/snow.png" alt="Weather-icon" >`;
+                document.querySelector(".pic").innerHTML=`<img src="./snow.png" alt="Weather-icon" >`;
             }  else if(desci=="haze"){
-                    document.querySelector(".pic").innerHTML=`<img src="/mist-moon.png" alt="Weather-icon" >` ;
+                    document.querySelector(".pic").innerHTML=`<img src="./mist-moon.png" alt="Weather-icon" >` ;
                 
             }
             else if(desci=="smoke")
             {
-                document.querySelector(".pic").innerHTML=`<img src="/mist-moon.png" alt="Weather-icon" >`;
+                document.querySelector(".pic").innerHTML=`<img src="./mist-moon.png" alt="Weather-icon" >`;
             }
             else if(desci=="light snow")
             {
-                document.querySelector(".pic").innerHTML=`<img src="/snow.png" alt="Weather-icon" >`;
+                document.querySelector(".pic").innerHTML=`<img src="./snow.png" alt="Weather-icon" >`;
             }
             else{
-                document.querySelector(".pic").innerHTML=`<img src="/broken-clouds.png" alt="Weather-icon" >`;
+                document.querySelector(".pic").innerHTML=`<img src="./broken-clouds.png" alt="Weather-icon" >`;
             }
         }
         else{
