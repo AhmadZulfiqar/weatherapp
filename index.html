@@ -3,26 +3,368 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="weatherapp.css" />
     <link rel="icon" href="./web-icon.png" />
     <title>Weather App</title>
+    <style>
+      /* 1. Global Reset & Theme Variables */
+      :root {
+        --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+        --panel-left: #ffffff;
+        --panel-right: rgba(255, 255, 255, 0.06);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --text-primary: #0f172a;
+        --text-muted: #64748b;
+        --accent-glow: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+        --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 100%);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      body {
+        min-height: 100vh;
+        background: var(--bg-gradient);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        padding: 20px;
+        color: #f8fafc;
+        overflow-x: hidden;
+      }
+
+      /* 2. Main Glassmorphic Container */
+      .main {
+        width: 100%;
+        max-width: 1140px;
+        min-height: 620px;
+        background: rgba(15, 23, 42, 0.4);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        display: flex;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        border-radius: 30px;
+        border: 1px solid var(--glass-border);
+        overflow: hidden;
+      }
+
+      /* 3. Left Panel (Clean Solid/Light Theme contrast) */
+      .b1 {
+        width: 35%;
+        padding: 40px;
+        background-color: var(--panel-left);
+        color: var(--text-primary);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+      }
+
+      .input {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      input {
+        width: 100%;
+        height: 50px;
+        border-radius: 15px;
+        padding: 0 55px 0 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        border: 1px solid #e2e8f0;
+        background-color: #f1f5f9;
+        color: var(--text-primary);
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #818cf8;
+        background-color: #ffffff;
+        box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.15);
+      }
+
+      button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+      }
+
+      button:hover {
+        background-color: rgba(0,0,0,0.05);
+      }
+
+      #search { 
+        width: 18px; 
+        opacity: 0.7;
+      }
+
+      /* Layout Elements Inside Left Panel */
+      .inner {
+        margin: 20px 0;
+      }
+
+      .pic img {
+        width: 120px;
+        margin: 10px auto;
+        filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+        animation: float 4s ease-in-out infinite;
+      }
+
+      h1#temp { 
+        font-size: 4rem; 
+        font-weight: 700;
+        letter-spacing: -1px;
+        background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      #description { 
+        font-size: 1.2rem; 
+        color: var(--text-muted); 
+        font-weight: 500;
+        text-transform: capitalize;
+      }
+
+      hr {
+        border: 0;
+        height: 1px;
+        background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+        margin: 25px 0;
+      }
+
+      .time {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      .date { font-weight: 600; color: #334155;}
+      .ctime { font-weight: 500; margin: 4px 0;}
+      .zone { 
+        display: inline-block;
+        padding: 3px 12px;
+        background: #f1f5f9;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #475569;
+        margin-top: 5px;
+      }
+
+      h1#city { 
+        font-size: 2rem; 
+        margin-top: 25px;
+        font-weight: 700;
+        color: #1e293b;
+      }
+
+      /* 4. Right Panel (Forecast & Highlights Grid) */
+      .b2 {
+        width: 65%;
+        background-color: var(--panel-right);
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      p#today { 
+        font-size: 1.1rem; 
+        font-weight: 600; 
+        letter-spacing: 0.5px;
+        color: #94a3b8;
+        margin-bottom: 15px;
+      }
+
+      /* 5-Day Forecast Grid */
+      .forcast {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        margin-bottom: 35px;
+      }
+
+      .s1 {
+        background: var(--card-gradient);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        padding: 18px 10px;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .s1:hover { 
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      }
+
+      .md { 
+        font-size: 0.85rem; 
+        color: #38bdf8; 
+        font-weight: 600; 
+      }
+
+      .png { 
+        width: 45px; 
+        margin: 12px 0;
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+      }
+
+      .stemp { 
+        font-size: 0.9rem;
+        font-weight: 600; 
+        color: #f8fafc;
+      }
+      .stemp span:last-child {
+        color: #94a3b8;
+      }
+
+      /* Today's Metrics Grid */
+      .section {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .section:last-child { margin-bottom: 0; }
+
+      .box1 {
+        background: var(--card-gradient);
+        border: 1px solid var(--glass-border);
+        padding: 22px;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .box1::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 4px; height: 100%;
+        background: var(--accent-glow);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .box1:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .box1:hover::before { opacity: 1; }
+
+      #text { 
+        font-size: 0.85rem; 
+        color: #94a3b8; 
+        text-transform: uppercase; 
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+      }
+
+      .box1 p:last-child { 
+        font-size: 1.5rem; 
+        font-weight: 700;
+        color: #ffffff;
+      }
+
+      /* 5. Keyframe Animations */
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+        100% { transform: translateY(0px); }
+      }
+
+      /* 6. ADVANCED RESPONSIVE MEDIA QUERIES */
+
+      /* Desktop Small / Tablet Landscape */
+      @media (max-width: 1024px) {
+        .main { max-width: 900px; min-height: auto; }
+        .b1 { padding: 30px; }
+        .b2 { padding: 30px; }
+        h1#temp { font-size: 3.5rem; }
+      }
+
+      /* Tablet Portrait View */
+      @media (max-width: 850px) {
+        .main { flex-direction: column; }
+        .b1, .b2 { width: 100%; }
+        .b1 { padding: 40px; border-radius: 30px 30px 0 0; }
+        .b2 { padding: 40px; border-radius: 0 0 30px 30px; }
+        .forcast { gap: 10px; }
+      }
+
+      /* Smartphone Layout */
+      @media (max-width: 600px) {
+        body { padding: 12px; }
+        .b1 { padding: 30px 20px; }
+        .b2 { padding: 30px 20px; }
+        
+        /* 2-column masonry grid for 5-day forecast on mobile cards */
+        .forcast {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        /* Make the last two forecast boxes flow naturally or clean on row 2 */
+        .forcast .s1:nth-child(4), .forcast .s1:nth-child(5) {
+          grid-column: span 1;
+        }
+
+        /* 2-column metrics blocks on mobile screens */
+        .section {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+        
+        h1#temp { font-size: 3.2rem; }
+        h1#city { font-size: 1.75rem; }
+      }
+
+      /* Very Small Devices */
+      @media (max-width: 400px) {
+        .forcast { grid-template-columns: repeat(2, 1fr); }
+        .section { grid-template-columns: 1fr; }
+      }
+    </style>
   </head>
   <body>
     <div class="main">
       <div class="b1">
         <div class="input">
-          <input type="text" name="" id="" placeholder="Enter City Name:" />
+          <input type="text" placeholder="Enter City Name..." />
           <button>
             <img
               src="https://purepng.com/public/uploads/large/search-icon-lob.png"
               id="search"
-              alt=""
+              alt="Search Icon"
             />
           </button>
         </div>
         <div class="inner">
           <div class="pic">
-            <img src="./sunny.png" id="cloud" alt="" />
+            <img src="./sunny.png" id="cloud" alt="Weather Situation" />
           </div>
           <h1 id="temp">31 <sup>o</sup>C</h1>
           <p id="description">Cloudy</p>
@@ -35,10 +377,8 @@
             <span id="year">2025</span>
           </div>
           <div class="ctime">
-            <span id="cday">Monday</span>
-            <span id="t1">10</span>
-            <span id="colon ">:</span>
-            <span id="t2">47</span>
+            <span id="cday">Monday</span>, 
+            <span id="t1">10</span><span id="colon">:</span><span id="t2">47</span>
             <span id="se">PM</span>
           </div>
           <div class="zone">
@@ -47,112 +387,104 @@
         </div>
         <h1 id="city">Gujranwala</h1>
       </div>
+
       <div class="b2">
-        <p id="today">5 Day Forcast:</p>
+        <p id="today">5 Day Forecast</p>
         <div class="forcast">
           <div class="s1">
             <div class="md">
-              <span id="wm1">03</span>
-              <span>/</span>
-              <span id="wd1">26</span>
+              <span id="wm1">03</span>/<span id="wd1">26</span>
             </div>
-            <divs class="s11">
-              <img src="./broken-clouds-moon.png" class="png" alt="" />
-            </divs>
+            <div class="s11">
+              <img src="./broken-clouds-moon.png" class="png" alt="icon" />
+            </div>
             <p class="stemp">
-              <span id="stmax1">20 <sup>o</sup></span>
+              <span id="stmax1">20<sup>o</sup></span>
               <span>/</span>
-              <span id="stmin1">20 <sup>o</sup></span>
+              <span id="stmin1">16<sup>o</sup></span>
             </p>
           </div>
           <div class="s1">
             <div class="md">
-              <span id="wm2">03</span>
-              <span>/</span>
-              <span id="wd2">26</span>
+              <span id="wm2">03</span>/<span id="wd2">27</span>
             </div>
-            <divs class="s12">
-              <img src="./broken-clouds-moon.png" class="png" alt="" />
-            </divs>
+            <div class="s12">
+              <img src="./broken-clouds-moon.png" class="png" alt="icon" />
+            </div>
             <p class="stemp">
-              <span id="stmax2">20 <sup>o</sup></span>
+              <span id="stmax2">22<sup>o</sup></span>
               <span>/</span>
-              <span id="stmin2">20 <sup>o</sup></span>
+              <span id="stmin2">15<sup>o</sup></span>
             </p>
           </div>
           <div class="s1">
             <div class="md">
-              <span id="wm3">03</span>
-              <span>/</span>
-              <span id="wd3">26</span>
+              <span id="wm3">03</span>/<span id="wd3">28</span>
             </div>
-            <divs class="s13">
-              <img src="./broken-clouds-moon.png" class="png" alt="" />
-            </divs>
+            <div class="s13">
+              <img src="./broken-clouds-moon.png" class="png" alt="icon" />
+            </div>
             <p class="stemp">
-              <span id="stmax3">20 <sup>o</sup></span>
+              <span id="stmax3">24<sup>o</sup></span>
               <span>/</span>
-              <span id="stmin3">20 <sup>o</sup></span>
+              <span id="stmin3">18<sup>o</sup></span>
             </p>
           </div>
           <div class="s1">
             <div class="md">
-              <span id="wm4">03</span>
-              <span>/</span>
-              <span id="wd4">26</span>
+              <span id="wm4">03</span>/<span id="wd4">29</span>
             </div>
-            <divs class="s14">
-              <img src="./broken-clouds-moon.png" class="png" alt="" />
-            </divs>
+            <div class="s14">
+              <img src="./broken-clouds-moon.png" class="png" alt="icon" />
+            </div>
             <p class="stemp">
-              <span id="stmax4">20 <sup>o</sup></span>
+              <span id="stmax4">21<sup>o</sup></span>
               <span>/</span>
-              <span id="stmin4">20 <sup>o</sup></span>
+              <span id="stmin4">17<sup>o</sup></span>
             </p>
           </div>
           <div class="s1">
             <div class="md">
-              <span id="wm5">03</span>
-              <span>/</span>
-              <span id="wd5">26</span>
+              <span id="wm5">03</span>/<span id="wd5">30</span>
             </div>
-            <divs class="s15">
-              <img src="./broken-clouds-moon.png" class="png" alt="" />
-            </divs>
+            <div class="s15">
+              <img src="./broken-clouds-moon.png" class="png" alt="icon" />
+            </div>
             <p class="stemp">
-              <span id="stmax5">20 <sup>o</sup></span>
+              <span id="stmax5">25<sup>o</sup></span>
               <span>/</span>
-              <span id="stmin5">20 <sup>o</sup></span>
+              <span id="stmin5">19<sup>o</sup></span>
             </p>
           </div>
         </div>
-        <p id="today">Today:</p>
+
+        <p id="today">Today's Highlights</p>
         <div class="section">
           <div class="box1">
-            <p id="text">Wind:</p>
+            <p id="text">Wind</p>
             <p id="wind">6 Km/h</p>
           </div>
           <div class="box1">
-            <p id="text">Humidity:</p>
+            <p id="text">Humidity</p>
             <p id="humidity">60%</p>
           </div>
           <div class="box1">
-            <p id="text">Feel Like:</p>
-            <p id="feel">30 <sup>o</sup></p>
+            <p id="text">Feels Like</p>
+            <p id="feel">30<sup>o</sup></p>
           </div>
         </div>
         <div class="section">
           <div class="box1">
-            <p id="text">Max-Temperature:</p>
-            <p id="max">30 <sup>o</sup></p>
+            <p id="text">Max Temp</p>
+            <p id="max">32<sup>o</sup></p>
           </div>
           <div class="box1">
-            <p id="text">Min-Temperature:</p>
-            <p id="min">30 <sup>o</sup></p>
+            <p id="text">Min Temp</p>
+            <p id="min">26<sup>o</sup></p>
           </div>
           <div class="box1">
-            <p id="text">Pressure:</p>
-            <p id="wpress">1000mb</p>
+            <p id="text">Pressure</p>
+            <p id="wpress">1000 mb</p>
           </div>
         </div>
       </div>
